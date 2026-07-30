@@ -1,0 +1,55 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.figure()
+plt.plot(x, y)
+plt.title("Onda Senoidal")
+plt.xlabel("X")
+plt.ylabel("Sen(X)")
+plt.grid(True)
+
+ruido = []
+
+for i in range(100):
+    ruido.append(random.uniform(-0.5, 0.5))
+
+plt.figure()
+plt.plot(x, ruido)
+plt.title("Ruído")
+plt.xlabel("X")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+sinal_com_ruido = []
+
+for i in range(100):
+    sinal_com_ruido.append(y[i] + ruido[i])
+
+plt.figure()
+plt.plot(x, sinal_com_ruido)
+plt.title("Sinal com Ruído")
+plt.xlabel("X")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+sinal_filtrado = []
+for i in range(100):
+    if i < 2 or i > 97:
+        sinal_filtrado.append(sinal_com_ruido[i])
+    else:
+        media = (sinal_com_ruido[i-2] + sinal_com_ruido[i-1] + sinal_com_ruido[i] + sinal_com_ruido[i+1] + sinal_com_ruido[i+2]) / 5
+        sinal_filtrado.append(media)
+
+plt.figure()
+plt.plot(x, sinal_filtrado)
+plt.title("Sinal com Ruído Filtrado")
+plt.xlabel("X")
+plt.ylabel("Amplitude")
+plt.grid(True)
+
+plt.show()
+
